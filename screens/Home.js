@@ -29,7 +29,7 @@ export default class HomeScreen extends Component {
     this.getMovie();
   }
 
-  /*defina as funçoes getmovie(), likedMovie(), dislikedMovie() e notWatched() aqui*/
+  /* função getmovie()*/
 
   getMovie = () => {
     const url = this.state.ngrok_url + "/movies";
@@ -42,48 +42,12 @@ export default class HomeScreen extends Component {
         console.log(error.message);
       });
   };
+  /* escrever funções das rotas: likedMovie(), dislikedMovie() e notWatched() aqui*/
 
-  likedMovie = () => {
-    const url = this.state.ngrok_url + "/like";
-    axios
-      .get(url)
-      .then((response) => {
-        this.getMovie();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  dislikedMovie = () => {
-    const url = this.state.ngrok_url + "/dislike";
-    axios
-      .get(url)
-      .then((response) => {
-        this.getMovie();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
-  notWatched = () => {
-    const url = this.state.ngrok_url + "/did_not_watch";
-    axios
-      .get(url)
-      .then((response) => {
-        this.getMovie();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-
+ 
   render() {
-    /*const { movieDetails } = this.state;
-    if (movieDetails.poster_link) {
-      const { poster_link, original_title, release_date, duration, rating } =
-        movieDetails;*/
+    /*condicional pra carregar dados antes de abrir app:
+  */
 
       return (
         <View style={styles.container}>
@@ -106,65 +70,34 @@ export default class HomeScreen extends Component {
             </View>
 
             <View style={styles.subContainer}>
-              <ScrollView
-                 horizontal={true}
-                 showsHorizontalScrollIndicator={false}
-                 pagingEnabled={true}
-              > 
+            
 
               <View style={styles.posterContainer}>
                 {/*Adicione o componente da imagem do pôster abaixo*/}
-               {/* <Image
-                  style={styles.posterImage}
-                  source={{ uri: poster_link }}
-              />*/}
+               
               </View>
               <View style={{ flex: 0.15 }}>
                 {/*Adicione os componentes para mostrar o nome do filme e outros detalhes (data de lançamento e duração) abaixo*/}
                 <View style={styles.detailsContainer}>
-                  {/* <Text style={styles.title}>{original_title}</Text>
-                  <Text style={styles.subtitle}>
-                    {release_date.split("-")[0]} | {duration} mins
-                  </Text> */}
+                  
                 </View>
               </View>
 
-              </ScrollView>
+            
               <View style={styles.ratingContainer}>
                 {/*Adicione os componentes para mostrar a classificação do filme abaixo*/}
-                {/* <Star score={rating} style={styles.starStyle} /> */}
+               
               </View>
+                  
               <View style={styles.iconButtonContainer}>
                 {/*Adicione o código para os botões curtir, não curtir e não assisti abaixo*/}
-                <TouchableOpacity onPress={this.likedMovie}>
-                  {/*<Image
-                    style={styles.iconImage}
-                    source={require("../assets/like.png")}
-              />*/}
-
-              <MaterialCommunityIcons name="movie-open-star" color="red" size={32}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.dislikedMovie}>
-                  {/* <Image
-                    style={styles.iconImage}
-                    source={require("../assets/dislike.png")}
-                  /> */}
-                  <MaterialCommunityIcons name="movie-open-off" color="yellow" size={32}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.notWatched}>
-                  <Image
-                    style={styles.iconImage}
-                    source={require("../assets/didNotWatch.png")}
-                  />
-                </TouchableOpacity>
+               
               </View>
             </View>
           </ImageBackground>
         </View>
       );
-    /*} else {
-      return null;
-    }*/
+   
   }
 }
 
