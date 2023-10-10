@@ -26,7 +26,7 @@
  - verificar se todas as rotas estão chegando
     - está retornana apenas o primeiro filme da lista de filmes
 
-  #### criar Waiframe da primeira tela
+ - criar warframe da primeira tela
     - nome do file
     - poster
     - as classificações
