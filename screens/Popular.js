@@ -43,16 +43,32 @@ export default class PopularMoviesScreen extends Component {
   keyExtractor = (item, index) => index.toString();
 
 //4 exibir na tela com render item tirar o render
-  renderItem = ({item, index}) =>{ 
-  
+ renderItems = ({ item, index }) => {
+    return (
+      <View style={styles.cardContainer}>
+        <Image
+          style={styles.posterImage}
+          source={{ uri: item.poster_link }}
+        ></Image>
+        <View style={styles.movieTitleContainer}>
+          <Text style={styles.title}>{item.original_title}</Text>
+          <View style={{flexDirection:"row"}}>
+            <Text style={styles.subtitle}>{item.duration} min | </Text>
+            <Star score={item.rating} style={styles.starStyle}/>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  render() {
+    const { data } = this.state;
     return (
       <View style={styles.container}>
         <ImageBackground
           source={require("../assets/bg.png")}
           style={{ flex: 1 }}
         >
-
-          {/*Adicione o componente FlatList para mostrar os dados dos filmes populares abaixo*/}
           <FlatList
             data={data}
             keyExtractor={this.keyExtractor}
