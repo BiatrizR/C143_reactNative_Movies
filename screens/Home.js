@@ -21,7 +21,7 @@ export default class HomeScreen extends Component {
     super();
     this.state = {
       movieDetails: {},
-      ngrok_url: "https://058d-201-71-11-160.ngrok-free.app",
+      ngrok_url: "https://4cb2-201-71-11-105.ngrok.io",
     };
   }
 
@@ -29,7 +29,7 @@ export default class HomeScreen extends Component {
     this.getMovie();
   }
 
-  /* função getmovie()*/
+  /*defina as funçoes getmovie(), likedMovie(), dislikedMovie() e notWatched() aqui*/
 
   getMovie = () => {
     const url = this.state.ngrok_url + "/movies";
@@ -42,19 +42,56 @@ export default class HomeScreen extends Component {
         console.log(error.message);
       });
   };
-  /* escrever funções das rotas: likedMovie(), dislikedMovie() e notWatched() aqui*/
 
- 
+  likedMovie = () => {
+    const url = this.state.ngrok_url + "/like";
+    axios
+      .get(url)
+      .then((response) => {
+        this.getMovie();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  dislikedMovie = () => {
+    const url = this.state.ngrok_url + "/dislike";
+    axios
+      .get(url)
+      .then((response) => {
+        this.getMovie();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
+  notWatched = () => {
+    const url = this.state.ngrok_url + "/did_not_watch";
+    axios
+      .get(url)
+      .then((response) => {
+        this.getMovie();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   render() {
-    /*condicional pra carregar dados antes de abrir app:
-  */
+    const { movieDetails } = this.state;
+    if (movieDetails.poster_link) {
+      const { poster_link, original_title, release_date, duration, rating } =
+        movieDetails;
 
       return (
         <View style={styles.container}>
-          <ImageBackground
+        
+          {/* <ImageBackground
             source={require("../assets/bg.png")}
             style={{ flex: 1 }}
-          >
+          > */}
             <View style={styles.headerContainer}>
               <Text style={styles.headerTitle}>Recomendação de Filmes</Text>
               <Icon
@@ -66,52 +103,84 @@ export default class HomeScreen extends Component {
                 onPress={() => {
                   this.props.navigation.navigate("Movies");
                 }}
-              ></Icon>
+              />
             </View>
-
+                    
             <View style={styles.subContainer}>
-            
-
+          
               <View style={styles.posterContainer}>
+                
                 {/*Adicione o componente da imagem do pôster abaixo*/}
-               
+               <Image
+                  style={styles.posterImage}
+                  source={{ uri: poster_link }}
+              />
+
               </View>
               <View style={{ flex: 0.15 }}>
                 {/*Adicione os componentes para mostrar o nome do filme e outros detalhes (data de lançamento e duração) abaixo*/}
                 <View style={styles.detailsContainer}>
-                  
+                  <Text style={styles.title}>{original_title}</Text>
+                  <Text style={styles.subtitle}>
+                    {release_date.split("-")[0]} | {duration} mins
+                  </Text>
                 </View>
               </View>
-
+             
             
               <View style={styles.ratingContainer}>
                 {/*Adicione os componentes para mostrar a classificação do filme abaixo*/}
-               
+                <Star score={rating} style={styles.starStyle} />
               </View>
-                  
               <View style={styles.iconButtonContainer}>
                 {/*Adicione o código para os botões curtir, não curtir e não assisti abaixo*/}
+                <TouchableOpacity onPress={this.likedMovie}>
+                  {/* <Image
+                    style={styles.iconImage}
+                    source={require("../assets/like.png")}
+              /> */}
+
+              <MaterialCommunityIcons name="movie-open-star" color="red" size={32}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.dislikedMovie}>
+                  {/* <Image
+                    style={styles.iconImage}
+                    source={require("../assets/dislike.png")}
+                  /> */}
+                  <MaterialCommunityIcons style={styles.iconImage} name="movie-open-off" color="yellow" size={32}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.notWatched}>
+                  {/* <Image
+                    style={styles.iconImage}
+                    source={require("../assets/didNotWatch.png")}
+                  /> */}
+                  <MaterialCommunityIcons style={styles.iconImage} name="eye-off" color="#327da8" size={32}/>
+                </TouchableOpacity>
                
               </View>
+              
             </View>
-          </ImageBackground>
+          {/* </ImageBackground> */}
+         
         </View>
       );
-   
+    } else {
+      return null;
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
   },
   headerContainer: {
     flex: 0.07,
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "flex-end",
-    backgroundColor: "#182854",
+    backgroundColor: "#327da8",
   },
   headerTitle: {
     color: "#fff",
